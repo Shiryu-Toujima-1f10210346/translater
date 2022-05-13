@@ -4,12 +4,14 @@ from django.core.exceptions import SuspiciousOperation
 from django.views.decorators.csrf import csrf_exempt
 import urllib
 import json
+import requests
 
 from .models import Reply
 
-WEBHOOK_URL = 'YOUR_WEBHOOK_URL'
-VERIFICATION_TOKEN = 'YOUR_VERIFICATION_TOKEN'
+WEBHOOK_URL = 'https://hooks.slack.com/services/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'
+VERIFICATION_TOKEN = 'XtILwDM60IqiCfB6AmiQj37U'
 ACTION_HOW_ARE_YOU = 'HOW_ARE_YOU'
+DEEPL_API_KEY = 'c9dde83d-18ca-df0e-cff2-bdc10b0b424d:fx'
 
 def index(request):
     positive_replies = Reply.objects.filter(response=Reply.POSITIVE)
@@ -49,8 +51,20 @@ def echo(request):
     user_id = request.POST['user_id']
     content = request.POST['text']
 
+    source_lang = 'JA'
+    target_lang = 'EN'
+    params = {
+            'auth_key' : DEEPL_API_KEY,
+            'text' : content,
+            'source_lang' : source_lang,
+            "target_lang": target_lang
+        }
+
+    request = requests.post("https://api-free.deepl.com/v2/translate", data=params)
+    deepl_result = request.json()
+
     result = {
-        'text': '<@{}> {}'.format(user_id, content.upper()),
+        'text': '<@{}> {}'.format(user_id, deepl_result),
         'response_type': 'in_channel'
     }
 
