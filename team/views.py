@@ -61,7 +61,7 @@ def echo(request):
         }
 
     request = requests.post("https://api-free.deepl.com/v2/translate", data=params)
-    deepl_result = request.json()
+    deepl_result = request.json()["translations"][0]["text"]
 
     result = {
         'text': '<@{}> {}'.format(user_id, deepl_result),
