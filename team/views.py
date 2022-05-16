@@ -4,7 +4,6 @@ from django.core.exceptions import SuspiciousOperation
 from django.views.decorators.csrf import csrf_exempt
 import urllib
 import json
-import requests
 
 from .models import Reply
 
@@ -51,20 +50,8 @@ def echo(request):
     user_id = request.POST['user_id']
     content = request.POST['text']
 
-    source_lang = 'JA'
-    target_lang = 'EN'
-    params = {
-            'auth_key' : DEEPL_API_KEY,
-            'text' : content,
-            'source_lang' : source_lang,
-            "target_lang": target_lang
-        }
-
-    request = requests.post("https://api-free.deepl.com/v2/translate", data=params)
-    deepl_result = request.json()["translations"][0]["text"]
-
     result = {
-        'text': '<@{}> {}'.format(user_id, deepl_result),
+        'text': '<@{}> {}'.format(user_id, content.upper()),
         'response_type': 'in_channel'
     }
 
