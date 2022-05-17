@@ -65,9 +65,9 @@ def echo(request):
 
     except:
         deepl_result = 'error!'
-        
+
     result = {
-        'text': '<@{}> {}'.format(user_id, deepl_result),
+        'text': '<@{}> {}, {}'.format(user_id, content, deepl_result),
         'response_type': 'in_channel'
     }
 
