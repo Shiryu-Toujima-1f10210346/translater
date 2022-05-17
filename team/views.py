@@ -64,10 +64,43 @@ def echo(request):
     deepl_result = request.json()["translations"][0]["text"]
 
     result = {
-        'text': '<@{}> {}'.format(user_id, deepl_result),
-        'response_type': 'in_channel'
+        'response_type': 'in_channel',
+        #'text': '<@{}> {}'.format(user_id, deepl_result),
+	    'blocks': [
+		    {
+			    "type": "divider"
+		    },
+		    {
+			    "type": "context",
+			    "elements": [
+				    {
+					    "type": "image",
+					    "image_url": "https://2.bp.blogspot.com/-5iAeI3keuUc/WQA-LdnYJnI/AAAAAAABD5s/N7JKSqu2EMA52fN1wNgP8GmxGKJ2wkHhwCLcB/s400/pose_atama_kakaeru_man.png",
+					    "alt_text": "in trouble"
+				    },
+				    {
+					    "type": "mrkdwn",
+					    "text": content + 'を翻訳したい!!'
+				    }
+			    ]
+		    },
+		    {
+			    "type": "divider"
+		    },
+		    {
+			    "type": "section",
+			    "text": {
+				    "type": "mrkdwn",
+				    "text": '<@{}> {}'.format(user_id, deepl_result)
+			    },
+			    "accessory": {
+				"type": "image",
+				"image_url": "https://1.bp.blogspot.com/-Y3XP7MTbu2E/X_f4EwvwsYI/AAAAAAABdLk/xxFAVCjrZw0vNpqjK-JQOSsFE6lWwYtSQCNcBGAsYHQ/s400/america_daitouryousen_man2.png",
+				"alt_text": "america"
+			    }
+		    }
+	    ]
     }
-
     return JsonResponse(result)
 
 @csrf_exempt
