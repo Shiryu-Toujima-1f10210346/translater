@@ -80,7 +80,7 @@ def echo(request):
 				    },
 				    {
 					    "type": "mrkdwn",
-					    "text": content + 'を翻訳したい!!'
+					    "text": '{}'.format(content) + 'を翻訳したい!!'
 				    }
 			    ]
 		    },
