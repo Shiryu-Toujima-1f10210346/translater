@@ -50,19 +50,22 @@ def echo(request):
     user_name = request.POST['user_name']
     user_id = request.POST['user_id']
     content = request.POST['text']
-
-    source_lang = 'JA'
-    target_lang = 'EN'
-    params = {
-            'auth_key' : DEEPL_API_KEY,
-            'text' : content,
-            'source_lang' : source_lang,
-            "target_lang": target_lang
+    try:
+        source_lang = 'JA'
+        target_lang = 'EN'
+        params = {
+                'auth_key' : DEEPL_API_KEY,
+                'text' : content,
+                'source_lang' : source_lang,
+                'target_lang': target_lang
         }
 
-    request = requests.post("https://api-free.deepl.com/v2/translate", data=params)
-    deepl_result = request.json()["translations"][0]["text"]
+        request = requests.post("https://api-free.deepl.com/v2/translate", data=params)
+        deepl_result = request.json()["translations"][0]["text"]
 
+    except:
+        deepl_result = 'error!'
+        
     result = {
         'text': '<@{}> {}'.format(user_id, deepl_result),
         'response_type': 'in_channel'
