@@ -72,6 +72,15 @@ def echo(request):
 		    {
 			    "type": "divider"
 		    },
+            {
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": '<@{}>'.format(user_id)
+				}
+			]
+		},
 		    {
 			    "type": "context",
 			    "elements": [
@@ -82,7 +91,7 @@ def echo(request):
 				    },
 				    {
 					    "type": "mrkdwn",
-					    "text": '<@{}> {}'.format(user_id, content) + 'を翻訳したい!!'
+					    "text": '{}'.format(content) + 'を翻訳したい!!'
 				    }
 			    ]
 		    },
