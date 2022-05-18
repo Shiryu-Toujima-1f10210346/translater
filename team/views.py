@@ -82,7 +82,7 @@ def echo(request):
 				    },
 				    {
 					    "type": "mrkdwn",
-					    "text": '{}'.format(content) + 'を翻訳したい!!'
+					    "text": '<@{}> {}'.format(user_id, content) + 'を翻訳したい!!'
 				    }
 			    ]
 		    },
@@ -93,13 +93,16 @@ def echo(request):
 			    "type": "section",
 			    "text": {
 				    "type": "mrkdwn",
-				    "text": '<@{}> {}'.format(user_id, deepl_result)
+				    "text": '{}'.format(deepl_result)
 			    },
 			    "accessory": {
 				"type": "image",
 				"image_url": "https://1.bp.blogspot.com/-Y3XP7MTbu2E/X_f4EwvwsYI/AAAAAAABdLk/xxFAVCjrZw0vNpqjK-JQOSsFE6lWwYtSQCNcBGAsYHQ/s400/america_daitouryousen_man2.png",
 				"alt_text": "america"
 			    }
+		    },
+            {
+			    "type": "divider"
 		    }
 	    ]
     }
