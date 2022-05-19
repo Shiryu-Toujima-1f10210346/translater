@@ -31,7 +31,26 @@
         </form>
       </div>
       <a class="btn btn-danger" href="{% url 'clear' %}">Reset</a>
-
+      <div class="row">
+      {% for translatelog in tranlatelogs %}
+      <div class="col-3">
+      <div class="card">
+        <div class="card-header">
+          {{translatelog.user_name}}: {{translatelog.source_lang}} → {{translatelog.target_lang}}
+        </div>
+        <div class="card-body">
+          <h2 class="card-title h5">原文</h2>
+          <p class="card-text">{{translatelog.origin_text}}</p>
+          <h2 class="card-title h5">翻訳結果</h2>
+          <p class="card-text">{{translatelog.deepl_text}}</p>
+          <div class="card-footer">
+            {{translatelog.date}}
+          </div>
+        </div>
+      </div>
+      </div>
+      {% endfor %}
+      </div>
       <div class="card mt-3">
         <h3 class="card-header">
           Fine people

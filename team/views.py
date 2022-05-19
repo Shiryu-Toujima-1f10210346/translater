@@ -6,7 +6,7 @@ import urllib
 import json
 import requests
 
-from .models import Reply
+from .models import Reply, Translatelog
 
 WEBHOOK_URL = 'https://hooks.slack.com/services/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'
 VERIFICATION_TOKEN = 'XtILwDM60IqiCfB6AmiQj37U'
@@ -19,11 +19,13 @@ def index(request):
     positive_replies = Reply.objects.filter(response=Reply.POSITIVE)
     neutral_replies = Reply.objects.filter(response=Reply.NEUTRAL)
     negative_replies = Reply.objects.filter(response=Reply.NEGATIVE)
+    translatelogs = Translatelog.objects.all()
 
     context = {
         'positive_replies': positive_replies,
         'neutral_replies': neutral_replies,
         'negative_replies': negative_replies,
+        'translatelogs': translatelogs
 
     }
     return render(request, 'index.html', context)
@@ -66,6 +68,8 @@ def echo(request):
 
         request = requests.post("https://api-free.deepl.com/v2/translate", data=params)
         deepl_result = request.json()["translations"][0]["text"]
+        translate_log = Translatelog(user_name=user_name, user_id=user_id, origin_text=content, deepl_text=deepl_result, source_lang=source_lang, target_lang=target_lang)
+        translate_log.save()
 
     except:
         deepl_result = 'error!'
