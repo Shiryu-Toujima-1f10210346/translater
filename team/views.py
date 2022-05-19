@@ -50,7 +50,10 @@ def echo(request):
     if request.POST.get('token') != VERIFICATION_TOKEN:
         raise SuspiciousOperation('Invalid request.')
     
-    user_name = request.POST['user_name']
+    payload = json.loads(request.POST.get('payload'))
+    user = payload['user']
+    user_name=user['name']
+    
     user_id = request.POST['user_id']
     content = request.POST['text']
     try:
