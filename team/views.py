@@ -26,7 +26,6 @@ def index(request):
         'neutral_replies': neutral_replies,
         'negative_replies': negative_replies,
         'translatelogs': translatelogs
-
     }
     return render(request, 'index.html', context)
 
@@ -57,6 +56,7 @@ def echo(request):
     try:
         source_lang = 'JA'
         target_lang = 'EN-US'
+        source_lang_name = language[source_lang]
         target_lang_name = language[target_lang]
 
         params = {
@@ -68,7 +68,7 @@ def echo(request):
 
         request = requests.post("https://api-free.deepl.com/v2/translate", data=params)
         deepl_result = request.json()["translations"][0]["text"]
-        translate_log = Translatelog(user_name=user_name, user_id=user_id, origin_text=content, deepl_text=deepl_result, source_lang=source_lang, target_lang=target_lang)
+        translate_log = Translatelog(user_name=user_name, user_id=user_id, origin_text=content, deepl_text=deepl_result, source_lang=source_lang_name, target_lang=target_lang_name)
         translate_log.save()
 
     except:
