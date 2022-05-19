@@ -13,6 +13,8 @@ VERIFICATION_TOKEN = 'XtILwDM60IqiCfB6AmiQj37U'
 ACTION_HOW_ARE_YOU = 'HOW_ARE_YOU'
 DEEPL_API_KEY = 'c9dde83d-18ca-df0e-cff2-bdc10b0b424d:fx'
 
+language = {"BG":"ブルガリア語","CS":"チェコ語","DA":"デンマーク語","DE":"ドイツ語","EL":"ギリシャ語","EN-GB":"英語（イギリス）","EN-US":"英語（アメリカ）","ES":"スペイン語","ET":"エストニア語","FI":"フィンランド語","FR":"フランス語","HU":"ハンガリー語","ID":"インドネシア語","IT":"イタリア語","JA":"日本語","LT":"リトアニア語","LV":"ラトビア語","NL":"オランダ語","PL":"ポーランド語","PT-PT":"ポルトガル語（ブラジルポルトガル語を除くすべてのポルトガル語の品種）","PT-BR":"ポルトガル語（ブラジル）","RO":"ルーマニア語","RU":"ロシア語","SK":"スロバキア語","SL":"スロベニア語","SV":"スウェーデン語","TR":"トルコ語","ZH":"中国語"}
+
 def index(request):
     positive_replies = Reply.objects.filter(response=Reply.POSITIVE)
     neutral_replies = Reply.objects.filter(response=Reply.NEUTRAL)
@@ -52,7 +54,9 @@ def echo(request):
     content = request.POST['text']
     try:
         source_lang = 'JA'
-        target_lang = 'EN'
+        target_lang = 'EN-US'
+        target_lang_name = language[target_lang]
+
         params = {
                 'auth_key' : DEEPL_API_KEY,
                 'text' : content,
@@ -91,7 +95,7 @@ def echo(request):
 				    },
 				    {
 					    "type": "mrkdwn",
-					    "text": '{}'.format(content) + 'を翻訳したい!!'
+					    "text": '「{}」'.format(content) + 'を' + '{}'.format(target_lang_name) + 'に翻訳したい!!'
 				    }
 			    ]
 		    },
