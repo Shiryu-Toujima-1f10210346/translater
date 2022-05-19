@@ -30,7 +30,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 def clear(request):
-    Reply.objects.all().delete()
+    Translatelog.objects.all().delete()
     return redirect(index)
 
 def announce(request):
