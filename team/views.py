@@ -178,6 +178,198 @@ def hello(request):
                                 'emoji': True
                             },
                             'value': 'DE'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'ブルガリア語',
+                                'emoji': True
+                            },
+                            'value': 'BG'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'チェコ語',
+                                'emoji': True
+                            },
+                            'value': 'CS'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'デンマーク語',
+                                'emoji': True
+                            },
+                            'value': 'DA'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'ギリシャ語',
+                                'emoji': True
+                            },
+                            'value': 'EL'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': '英語（イギリス）',
+                                'emoji': True
+                            },
+                            'value': 'EN-GB'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'スペイン語',
+                                'emoji': True
+                            },
+                            'value': 'DE'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'エストニア語',
+                                'emoji': True
+                            },
+                            'value': 'ET'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'フィンランド語',
+                                'emoji': True
+                            },
+                            'value': 'FI'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'フランス語',
+                                'emoji': True
+                            },
+                            'value': 'FR'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'ハンガリー語',
+                                'emoji': True
+                            },
+                            'value': 'HU'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'インドネシア語',
+                                'emoji': True
+                            },
+                            'value': 'ID'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'イタリア語',
+                                'emoji': True
+                            },
+                            'value': 'IT'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'リトアニア語',
+                                'emoji': True
+                            },
+                            'value': 'LT'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'ラトビア語',
+                                'emoji': True
+                            },
+                            'value': 'LV'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'オランダ語',
+                                'emoji': True
+                            },
+                            'value': 'NL'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'ポーランド語',
+                                'emoji': True
+                            },
+                            'value': 'PL'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'ポルトガル語（ブラジルポルトガル語を除くすべてのポルトガル語の品種）',
+                                'emoji': True
+                            },
+                            'value': 'PT-PT'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'ポルトガル語（ブラジル）',
+                                'emoji': True
+                            },
+                            'value': 'PT-BR'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'ルーマニア語',
+                                'emoji': True
+                            },
+                            'value': 'RO'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'ロシア語',
+                                'emoji': True
+                            },
+                            'value': 'RU'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'スロバキア語',
+                                'emoji': True
+                            },
+                            'value': 'SK'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'スロベニア語',
+                                'emoji': True
+                            },
+                            'value': 'SL'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'スウェーデン語',
+                                'emoji': True
+                            },
+                            'value': 'SV'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
+                                'text': 'トルコ語',
+                                'emoji': True
+                            },
+                            'value': 'TR'
                         }
                     ],
                     'action_id': ACTION_DEEPL
