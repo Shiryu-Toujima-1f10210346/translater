@@ -116,8 +116,8 @@ def echo(request):
 			    },
 			    "accessory": {
 				"type": "image",
-				"image_url": "https://1.bp.blogspot.com/-Y3XP7MTbu2E/X_f4EwvwsYI/AAAAAAABdLk/xxFAVCjrZw0vNpqjK-JQOSsFE6lWwYtSQCNcBGAsYHQ/s400/america_daitouryousen_man2.png",
-				"alt_text": "america"
+				"image_url": "https://i.imgur.com/bGxNjXm.png",
+				"alt_text": "robot_ilust"
 			    }
 		    },
             {
@@ -466,8 +466,8 @@ def reply(request):
 			    },
 			    "accessory": {
 				"type": "image",
-				"image_url": "https://1.bp.blogspot.com/-Y3XP7MTbu2E/X_f4EwvwsYI/AAAAAAABdLk/xxFAVCjrZw0vNpqjK-JQOSsFE6lWwYtSQCNcBGAsYHQ/s400/america_daitouryousen_man2.png",
-				"alt_text": "america"
+				"image_url": "https://i.imgur.com/bGxNjXm.png",
+				"alt_text": "robot_ilust"
 			    }
 		    },
             {
