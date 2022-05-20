@@ -203,12 +203,12 @@ def reply(request):
         raise SuspiciousOperation('Invalid request.')
     
     print(payload)
-    user = payload['user']
-    user_id = payload['id']
-    selected_value = payload['actions'][0]['selected_option']['value']
-    response_url = payload['response_url']
-    content = payload['message']['blocks'][0]['text']['text']
     try:
+        user = payload['user']
+        user_id = payload['id']
+        selected_value = payload['actions'][0]['selected_option']['value']
+        response_url = payload['response_url']
+        content = payload['message']['blocks'][0]['text']['text']
         source_lang = 'JA'
         target_lang = selected_value
         source_lang_name = language[source_lang]
