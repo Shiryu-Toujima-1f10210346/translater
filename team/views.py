@@ -165,6 +165,14 @@ def hello(request):
                         {
                             'text': {
                                 'type': 'plain_text',
+                                'text': '日本語',
+                                'emoji': True
+                            },
+                            'value': 'JA'
+                        },
+                        {
+                            'text': {
+                                'type': 'plain_text',
                                 'text': '中国語',
                                 'emoji': True
                             },
