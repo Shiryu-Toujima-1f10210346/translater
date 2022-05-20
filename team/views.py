@@ -145,7 +145,7 @@ def hello(request):
                 'type' : 'section',
                 'text' : {
                     'type': 'mrkdwn',
-                    'text': '{}'.format(user_id, content)
+                    'text': '{}'.format(content)
                 },
                 'accessory': {
                     'type': 'static_select',
