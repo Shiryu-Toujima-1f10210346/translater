@@ -10,7 +10,7 @@ from .models import Reply, Translatelog
 
 WEBHOOK_URL = 'https://hooks.slack.com/services/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'
 VERIFICATION_TOKEN = 'XtILwDM60IqiCfB6AmiQj37U'
-ACTION_HOW_ARE_YOU = 'HOW_ARE_YOU'
+ACTION_DEEPL = 'EN-US'
 DEEPL_API_KEY = 'c9dde83d-18ca-df0e-cff2-bdc10b0b424d:fx'
 
 language = {"BG":"ブルガリア語","CS":"チェコ語","DA":"デンマーク語","DE":"ドイツ語","EL":"ギリシャ語","EN-GB":"英語（イギリス）","EN-US":"英語（アメリカ）","ES":"スペイン語","ET":"エストニア語","FI":"フィンランド語","FR":"フランス語","HU":"ハンガリー語","ID":"インドネシア語","IT":"イタリア語","JA":"日本語","LT":"リトアニア語","LV":"ラトビア語","NL":"オランダ語","PL":"ポーランド語","PT-PT":"ポルトガル語（ブラジルポルトガル語を除くすべてのポルトガル語の品種）","PT-BR":"ポルトガル語（ブラジル）","RO":"ルーマニア語","RU":"ロシア語","SK":"スロバキア語","SL":"スロベニア語","SV":"スウェーデン語","TR":"トルコ語","ZH":"中国語"}
@@ -145,42 +145,42 @@ def hello(request):
                 'type' : 'section',
                 'text' : {
                     'type': 'mrkdwn',
-                    'text': '<@{}> How are you?'.format(user_id)
+                    'text': '<@{}> 「{}」をどの言語に翻訳しますか？'.format(user_id, content)
                 },
                 'accessory': {
                     'type': 'static_select',
                     'placeholder': {
                         'type': 'plain_text',
-                        'text': 'I am:',
+                        'text': '翻訳先',
                         'emoji': True
                     },
                     'options': [
                         {
                             'text': {
                                 'type': 'plain_text',
-                                'text': 'Fine.',
+                                'text': '英語（アメリカ）',
                                 'emoji': True
                             },
-                            'value': 'positive'
+                            'value': 'EN-US'
                         },
                         {
                             'text': {
                                 'type': 'plain_text',
-                                'text': 'So so.',
+                                'text': '中国語',
                                 'emoji': True
                             },
-                            'value': 'neutral'
+                            'value': 'ZH'
                         },
                         {
                             'text': {
                                 'type': 'plain_text',
-                                'text': 'Terrible.',
+                                'text': 'ドイツ語',
                                 'emoji': True
                             },
-                            'value': 'negative'
+                            'value': 'DE'
                         }
                     ],
-                    'action_id': ACTION_HOW_ARE_YOU
+                    'action_id': ACTION_DEEPL
                 }
             }
         ],
@@ -199,30 +199,35 @@ def reply(request):
     if payload.get('token') != VERIFICATION_TOKEN:
         raise SuspiciousOperation('Invalid request.')
     
-    if payload['actions'][0]['action_id'] != ACTION_HOW_ARE_YOU:
+    if payload['actions'][0]['action_id'] != ACTION_DEEPL:
         raise SuspiciousOperation('Invalid request.')
     
+    print(payload)
     user = payload['user']
     selected_value = payload['actions'][0]['selected_option']['value']
     response_url = payload['response_url']
-
-    if selected_value == 'positive':
-        reply = Reply(user_name=user['name'], user_id=user['id'], response=Reply.POSITIVE)
-        reply.save()
+    try:
+        if selected_value == 'positive':
+            reply = Reply(user_name=user['name'], user_id=user['id'], response=Reply.POSITIVE)
+            reply.save()
+            response = {
+                'text': '<@{}> Great! :smile:'.format(user['id'])
+            }
+        elif selected_value == 'neutral':
+            reply = Reply(user_name=user['name'], user_id=user['id'], response=Reply.NEUTRAL)
+            reply.save()
+            response = {
+                'text': '<@{}> Ok, thank you! :sweat_smile:'.format(user['id'])
+            }
+        else:
+            reply = Reply(user_name=user['name'], user_id=user['id'], response=Reply.NEGATIVE)
+            reply.save()
+            response = {
+                'text': '<@{}> Good luck! :innocent:'.format(user['id'])
+            }
+    except:
         response = {
-            'text': '<@{}> Great! :smile:'.format(user['id'])
-        }
-    elif selected_value == 'neutral':
-        reply = Reply(user_name=user['name'], user_id=user['id'], response=Reply.NEUTRAL)
-        reply.save()
-        response = {
-            'text': '<@{}> Ok, thank you! :sweat_smile:'.format(user['id'])
-        }
-    else:
-        reply = Reply(user_name=user['name'], user_id=user['id'], response=Reply.NEGATIVE)
-        reply.save()
-        response = {
-            'text': '<@{}> Good luck! :innocent:'.format(user['id'])
+            'text': 'errrrror!!'
         }
     
     post_message(response_url, response)
