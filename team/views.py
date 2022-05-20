@@ -234,7 +234,7 @@ def reply(request):
     except:
         deepl_result = 'error!!'
     
-        response = {
+    response = {
         'response_type': 'in_channel',
 	    'blocks': [
 		    {
