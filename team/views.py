@@ -204,10 +204,15 @@ def reply(request):
     
     print(payload)
     user = payload['user']['username']
+    print(user)
     user_id = payload['user']['id']
+    print(user_id)
     selected_value = payload['actions'][0]['selected_option']['value']
+    print(selected_value)
     response_url = payload['response_url']
+    print(response_url)
     content = payload['message']['blocks'][0]['text']['text']
+    print(content)
     try:
         source_lang = 'JA'
         target_lang = selected_value
