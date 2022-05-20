@@ -405,20 +405,19 @@ def reply(request):
     content = payload['message']['blocks'][0]['text']['text']
     print(content)
     try:
-        source_lang = 'JA'
         target_lang = selected_value
-        source_lang_name = language[source_lang]
         target_lang_name = language[target_lang]
 
         params = {
                 'auth_key' : DEEPL_API_KEY,
                 'text' : content,
-                'source_lang' : source_lang,
                 'target_lang': target_lang
         }
 
         request = requests.post("https://api-free.deepl.com/v2/translate", data=params)
         deepl_result = request.json()["translations"][0]["text"]
+        deepl_sourse_result = request.json()["translations"][0]["detected_source_language"]
+        source_lang_name = language[deepl_sourse_result]
         translate_log = Translatelog(user_name=user, user_id=user_id, origin_text=content, deepl_text=deepl_result, source_lang=source_lang_name, target_lang=target_lang_name)
         translate_log.save()
 
