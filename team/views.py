@@ -145,7 +145,7 @@ def hello(request):
                 'type' : 'section',
                 'text' : {
                     'type': 'mrkdwn',
-                    'text': '<@{}> 「{}」をどの言語に翻訳しますか？'.format(user_id, content)
+                    'text': '{}'.format(user_id, content)
                 },
                 'accessory': {
                     'type': 'static_select',
@@ -193,7 +193,7 @@ def hello(request):
 def reply(request):
     if request.method != 'POST':
         return JsonResponse({})
-    
+
     payload = json.loads(request.POST.get('payload'))
     print(payload)
     if payload.get('token') != VERIFICATION_TOKEN:
@@ -204,31 +204,80 @@ def reply(request):
     
     print(payload)
     user = payload['user']
+    user_id = payload['id']
     selected_value = payload['actions'][0]['selected_option']['value']
     response_url = payload['response_url']
+    content = payload['message']['blocks'][0]['text']['text']
     try:
-        if selected_value == 'positive':
-            reply = Reply(user_name=user['name'], user_id=user['id'], response=Reply.POSITIVE)
-            reply.save()
-            response = {
-                'text': '<@{}> Great! :smile:'.format(user['id'])
-            }
-        elif selected_value == 'neutral':
-            reply = Reply(user_name=user['name'], user_id=user['id'], response=Reply.NEUTRAL)
-            reply.save()
-            response = {
-                'text': '<@{}> Ok, thank you! :sweat_smile:'.format(user['id'])
-            }
-        else:
-            reply = Reply(user_name=user['name'], user_id=user['id'], response=Reply.NEGATIVE)
-            reply.save()
-            response = {
-                'text': '<@{}> Good luck! :innocent:'.format(user['id'])
-            }
-    except:
-        response = {
-            'text': 'errrrror!!'
+        source_lang = 'JA'
+        target_lang = selected_value
+        source_lang_name = language[source_lang]
+        target_lang_name = language[target_lang]
+
+        params = {
+                'auth_key' : DEEPL_API_KEY,
+                'text' : content,
+                'source_lang' : source_lang,
+                'target_lang': target_lang
         }
+
+        request = requests.post("https://api-free.deepl.com/v2/translate", data=params)
+        deepl_result = request.json()["translations"][0]["text"]
+        translate_log = Translatelog(user_name=user, user_id=user_id, origin_text=content, deepl_text=deepl_result, source_lang=source_lang_name, target_lang=target_lang_name)
+        translate_log.save()
+
+    except:
+        deepl_result = 'error!!'
+    
+        response = {
+        'response_type': 'in_channel',
+	    'blocks': [
+		    {
+			    "type": "divider"
+		    },
+            {
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": '<@{}>'.format(user_id)
+				}
+			]
+		},
+		    {
+			    "type": "context",
+			    "elements": [
+				    {
+					    "type": "image",
+					    "image_url": "https://2.bp.blogspot.com/-5iAeI3keuUc/WQA-LdnYJnI/AAAAAAABD5s/N7JKSqu2EMA52fN1wNgP8GmxGKJ2wkHhwCLcB/s400/pose_atama_kakaeru_man.png",
+					    "alt_text": "in trouble"
+				    },
+				    {
+					    "type": "mrkdwn",
+					    "text": '「{}」'.format(content) + 'を' + '{}'.format(target_lang_name) + 'に翻訳したい!!'
+				    }
+			    ]
+		    },
+		    {
+			    "type": "divider"
+		    },
+		    {
+			    "type": "section",
+			    "text": {
+				    "type": "mrkdwn",
+				    "text": '{}'.format(deepl_result)
+			    },
+			    "accessory": {
+				"type": "image",
+				"image_url": "https://1.bp.blogspot.com/-Y3XP7MTbu2E/X_f4EwvwsYI/AAAAAAABdLk/xxFAVCjrZw0vNpqjK-JQOSsFE6lWwYtSQCNcBGAsYHQ/s400/america_daitouryousen_man2.png",
+				"alt_text": "america"
+			    }
+		    },
+            {
+			    "type": "divider"
+		    }
+	    ]
+    }
     
     post_message(response_url, response)
     return JsonResponse({})
